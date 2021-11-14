@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:intl/date_symbol_data_local.dart';
 
 class DaftarLayananPage extends StatefulWidget {
   const DaftarLayananPage({Key? key}) : super(key: key);
@@ -18,6 +19,7 @@ class _DaftarLayananPageState extends State<DaftarLayananPage> {
   @override
   void initState() {
     super.initState();
+    initializeDateFormatting();
     Intl.systemLocale = 'id_ID';
   }
 
@@ -51,6 +53,12 @@ class _DaftarLayananPageState extends State<DaftarLayananPage> {
               TextFormField(
                 onTap: _showDatePicker,
                 readOnly: true,
+                validator: (value) {
+                  if (value == null || value.toString().isEmpty) {
+                    return 'Silakan isi tanggal';
+                  }
+                  return null;
+                },
                 controller: TextEditingController.fromValue(
                   TextEditingValue(
                     text: DateFormat('d MMMM yyyy').format(_selectedDate),
@@ -72,6 +80,12 @@ class _DaftarLayananPageState extends State<DaftarLayananPage> {
                 height: 16,
               ),
               DropdownButtonFormField(
+                validator: (value) {
+                  if (value == null || value.toString().isEmpty) {
+                    return 'Silakan isi jam';
+                  }
+                  return null;
+                },
                 decoration: InputDecoration(
                   labelText: 'Jam Kunjungan',
                   border: OutlineInputBorder(
@@ -99,6 +113,12 @@ class _DaftarLayananPageState extends State<DaftarLayananPage> {
                 height: 16,
               ),
               TextFormField(
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return 'Silakan isi keperluan';
+                  }
+                  return null;
+                },
                 decoration: const InputDecoration(
                   floatingLabelBehavior: FloatingLabelBehavior.always,
                   labelText: 'Keperluan',
@@ -119,7 +139,9 @@ class _DaftarLayananPageState extends State<DaftarLayananPage> {
                   ),
                 ),
                 onPressed: () {
-                  Navigator.pop(context);
+                  if (_formKey.currentState!.validate()) {
+                    Navigator.pop(context);
+                  }
                 },
                 child: Text('Submit'),
               ),
