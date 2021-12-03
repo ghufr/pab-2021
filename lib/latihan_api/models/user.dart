@@ -1,26 +1,41 @@
-class User {
-  String id, firstName, lastName, email, avatar;
+class Attributes {
+  String firstName, lastName, email, avatar;
 
-  User({
-    required this.id,
-    required this.firstName,
+  Attributes({
+    this.firstName = '',
     this.lastName = '',
     this.email = '',
     this.avatar = '',
   });
 
+  factory Attributes.fromJson(Map<String, dynamic> json) {
+    return Attributes(
+      firstName: json['first_name'],
+      lastName: json['last_name'],
+      email: json['email'],
+      avatar: json['avatar'] ?? 'https://via.placeholder.com/128',
+    );
+  }
+}
+
+class User {
+  String id;
+  Attributes attributes;
+
+  User({
+    required this.id,
+    required this.attributes,
+  });
+
   factory User.fromJson(Map<String, dynamic> json) => User(
         id: json["id"].toString(),
-        firstName: json["attributes"]["first_name"],
-        lastName: json["attributes"]["last_name"],
-        email: json["attributes"]["email"],
-        avatar: json["attributes"]["avatar"],
+        attributes: Attributes.fromJson(json['attributes']),
       );
 
   Map<String, dynamic> toJson() => {
-        'first_name': firstName,
-        'last_name': lastName,
-        'email': email,
-        'avatar': avatar,
+        'first_name': attributes.firstName,
+        'last_name': attributes.lastName,
+        'email': attributes.email,
+        // 'avatar': attributes.avatar,
       };
 }

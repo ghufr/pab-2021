@@ -24,30 +24,41 @@ class _HomePageState extends State<HomePage> {
             UserProfile(
               user: user,
             ),
-            SizedBox(
+            const SizedBox(
               height: 24,
             ),
-            ElevatedButton(
-              onPressed: () {
-                UserDataSource.getUserById('1').then((User result) {
-                  setState(() {
-                    user = result;
-                  });
-                });
-              },
-              child: const Text("GET ONE"),
-            ),
-            ElevatedButton(
-              onPressed: () {
-                Navigator.pushNamed(context, '/list');
-              },
-              child: const Text('List'),
-            ),
-            ElevatedButton(
-              onPressed: () {
-                Navigator.pushNamed(context, '/input');
-              },
-              child: const Text('Input'),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                ElevatedButton(
+                  onPressed: () {
+                    UserDataSource.getUserById('7').then((User result) {
+                      setState(() {
+                        user = result;
+                      });
+                    });
+                  },
+                  child: const Text("Get"),
+                ),
+                const SizedBox(
+                  width: 16,
+                ),
+                ElevatedButton(
+                  onPressed: () {
+                    Navigator.pushNamed(context, '/list');
+                  },
+                  child: const Text('List'),
+                ),
+                const SizedBox(
+                  width: 16,
+                ),
+                ElevatedButton(
+                  onPressed: () {
+                    Navigator.pushNamed(context, '/input');
+                  },
+                  child: const Text('Input'),
+                ),
+              ],
             ),
           ],
         ),

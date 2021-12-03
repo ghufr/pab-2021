@@ -16,8 +16,14 @@ class _ListPageState extends State<ListPage> {
   @override
   void initState() {
     super.initState();
+    getUsers();
+  }
+
+  void getUsers() async {
+    print('GET USERS');
+    var result = await UserDataSource.getUsers();
     setState(() {
-      users = UserDataSource.getUsers();
+      users = result;
     });
   }
 
@@ -30,11 +36,12 @@ class _ListPageState extends State<ListPage> {
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(16),
         child: Column(
-          children: new List.generate(
-              users.length,
-              (index) => UserCard(
-                    user: users[index],
-                  )),
+          children: List.generate(
+            users.length,
+            (index) => UserCard(
+              user: users[index],
+            ),
+          ),
         ),
       ),
     );

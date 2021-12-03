@@ -16,7 +16,7 @@ class UserProfile extends StatelessWidget {
         ClipRRect(
           borderRadius: BorderRadius.circular(8.0),
           child: Image.network(
-            user!.avatar,
+            user!.attributes.avatar,
             height: 128,
             width: 128,
           ),
@@ -24,8 +24,13 @@ class UserProfile extends StatelessWidget {
         SizedBox(
           height: 16,
         ),
-        Text(user!.firstName + ' ' + user!.lastName + ' (' + user!.id + ')'),
-        Text(user!.email),
+        Text(user!.attributes.firstName +
+            ' ' +
+            user!.attributes.lastName +
+            ' (' +
+            user!.id +
+            ')'),
+        Text(user!.attributes.email),
       ],
     );
   }

@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:test1/latihan_api/data/user.dart';
+import 'package:test1/latihan_api/models/user.dart';
 
 class InputPage extends StatefulWidget {
   const InputPage({Key? key}) : super(key: key);
@@ -9,6 +11,8 @@ class InputPage extends StatefulWidget {
 
 class _InputPageState extends State<InputPage> {
   final _formKey = GlobalKey<FormState>();
+
+  String firstName = '', lastName = '', email = '';
 
   @override
   Widget build(BuildContext context) {
@@ -27,6 +31,9 @@ class _InputPageState extends State<InputPage> {
                   if (value == null || value.isEmpty) {
                     return 'Please fill in First Name field';
                   }
+                },
+                onSaved: (value) {
+                  firstName = value!;
                 },
                 decoration: const InputDecoration(
                   floatingLabelBehavior: FloatingLabelBehavior.always,
@@ -49,6 +56,9 @@ class _InputPageState extends State<InputPage> {
                     return 'Please fill in Last Name field';
                   }
                 },
+                onSaved: (value) {
+                  lastName = value!;
+                },
                 decoration: const InputDecoration(
                   floatingLabelBehavior: FloatingLabelBehavior.always,
                   labelText: 'Last Name',
@@ -70,6 +80,9 @@ class _InputPageState extends State<InputPage> {
                     return 'Please fill in Email field';
                   }
                 },
+                onSaved: (value) {
+                  email = value!;
+                },
                 decoration: const InputDecoration(
                   floatingLabelBehavior: FloatingLabelBehavior.always,
                   labelText: 'Email',
@@ -87,14 +100,27 @@ class _InputPageState extends State<InputPage> {
               ),
               ElevatedButton(
                 style: ElevatedButton.styleFrom(
-                  minimumSize: Size(
+                  minimumSize: const Size(
                     double.infinity,
                     48,
                   ),
                 ),
                 onPressed: () {
                   if (_formKey.currentState!.validate()) {
-                    Navigator.pushReplacementNamed(context, '/home');
+                    _formKey.currentState!.save();
+                    var nUser = User(
+                      id: '',
+                      attributes: Attributes(
+                        firstName: firstName,
+                        lastName: lastName,
+                        email: email,
+                        avatar: '',
+                      ),
+                    );
+
+                    UserDataSource.createUser(nUser).then((User result) {
+                      Navigator.pushReplacementNamed(context, '/');
+                    });
                   }
                 },
                 child: const Text('Submit'),

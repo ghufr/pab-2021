@@ -16,10 +16,26 @@ class UserCard extends StatelessWidget {
           children: [
             Row(
               children: [
-                Image.network(''),
+                Image.network(
+                  user.attributes.avatar,
+                  width: 64,
+                  height: 64,
+                ),
+                SizedBox(
+                  width: 16,
+                ),
                 Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text('Text'),
+                    Text(
+                      user.attributes.firstName +
+                          ' ' +
+                          user.attributes.lastName,
+                      style: TextStyle(
+                        fontWeight: FontWeight.w600,
+                      ),
+                    ),
+                    Text(user.attributes.email),
                   ],
                 ),
               ],
