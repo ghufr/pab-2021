@@ -5,7 +5,7 @@ import 'package:test1/latihan_api/models/user.dart';
 
 class UserDataSource {
   // ignore: non_constant_identifier_names
-  static String BASE_URL = 'http://10.0.2.2:1337/api';
+  static String BASE_URL = 'http://10.0.2.2:8082/api';
 
   static Future<List<User>> getUsers() async {
     Uri uri = Uri.parse('$BASE_URL/customers');
